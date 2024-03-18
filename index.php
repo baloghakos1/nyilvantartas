@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +8,7 @@
 </head>
 <body>
     <a href="raktar.php"><button>Raktárak</button></a>
+    <a href="muveletek.php"><button>Műveletek</button></a>
     <h1>Labdák</h1>
     <?php
     $servername = "localhost";

@@ -170,7 +170,7 @@ class Eszkozok
         return $asd;
     }
 
-    static function showStore($name,$length) {
+    static function showStore($name,$length,$tomb,$szamok,$min) {
         $result = '
         <style>
         table, th, td {
@@ -190,22 +190,250 @@ class Eszkozok
         for($i = 1; $i < $length[1]+1; $i++ ) {
             $result .= '<tr>
             <th rowspan="'. $length[3] .'"><h1>' . $i . '</h1></th>';
-            for($j=1;$j < $length[3]+1; $j++) {
-                $result .= '<td></td>';
+            for($j=1;$j < $length[2]+1; $j++) {
+                if($tomb[$i-1][$j-1][0] == "-") {
+                    $result .= '<td>-</td>';
+                }
+                else {
+                    $result .= '<td><b>'. $tomb[$i-1][$j-1][0] .'</b> <br>Darabszám:'.$szamok[$i-1][$j-1][0].' <br>Min darabszám:'.$min[$i-1][$j-1][0].'  </td>';
+                }
+                
             }
             $result .= '</tr>';
-            for($j=1;$j < $length[3]; $j++) {
+            for($j=1;$j < $length[2]; $j++) {
                 $result .= '<tr>';
                 for($k=1;$k < $length[3]+1; $k++) {
-                    $result .= '<td></td>';
+                    if($tomb[$i-1][$k-1][$j] == "-") {
+                        $result .= '<td>-</td>';
+                    }
+                    else {
+                        $result .= '<td><b>'.$tomb[$i-1][$k-1][$j] .'</b> <br>Darabszám:'.$szamok[$i-1][$k-1][$j].'<br>Min darabszám:'.$min[$i-1][$k-1][$j].' </td>';
+                    }
                 }
                 $result .= '</tr>';
             }
+            
         }
         
     $result .= '</Table>
         ';
         echo $result;
+    }
+
+    static function getStores($mysqli) {
+        $a = "SELECT name FROM stores";
+        return $mysqli->query($a)->fetch_all();
+    }
+
+    static function getALL($mysqli) {
+        $a = "SELECT * FROM products";
+        return $mysqli->query($a)->fetch_all();
+    }
+
+    static function getProductLength($mysqli) {
+        $a = "SELECT COUNT(*) FROM products";
+        return $mysqli->query($a)->fetch_all();
+    }
+
+    static function create3d($all, $length, $storeid, $numproducts) {
+        $asd = array();
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    $asd[$i][$j][$k] = "-";
+                }
+            }
+        }
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    for($l = 0; $l < $numproducts; $l++){
+                        if($all[$l][4] == $i+1) {
+                            if($all[$l][3] == $j+1) {
+                                if($all[$l][2] == $k+1) {
+                                    if($all[$l][5] == $storeid) {
+                                        $asd[$i][$j][$k] = $all[$l][1];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $asd;
+    }
+
+    static function fill3d($length, $asd) {
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    if($asd[$i][$j][$k] == null) {
+                        $asd[$i][$j][$k] = "-";
+                    }
+                }
+            }
+        }
+        return $asd;
+    }
+
+    static function createNumbers($all, $length, $storeid, $numproducts) {
+        $asd = array();
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    $asd[$i][$j][$k] = "-";
+                }
+            }
+        }
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    for($l = 0; $l < $numproducts; $l++){
+                        if($all[$l][4] == $i+1) {
+                            if($all[$l][3] == $j+1) {
+                                if($all[$l][2] == $k+1) {
+                                    if($all[$l][5] == $storeid) {
+                                        $asd[$i][$j][$k] = $all[$l][7];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $asd;
+    }
+
+    static function createMinNumbers($all, $length, $storeid, $numproducts) {
+        $asd = array();
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    $asd[$i][$j][$k] = "-";
+                }
+            }
+        }
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    for($l = 0; $l < $numproducts; $l++){
+                        if($all[$l][4] == $i+1) {
+                            if($all[$l][3] == $j+1) {
+                                if($all[$l][2] == $k+1) {
+                                    if($all[$l][5] == $storeid) {
+                                        $asd[$i][$j][$k] = $all[$l][6];
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $asd;
+    }
+
+    static function fillMissing($nev, $szam, $min, $length, $store, $x, $result) {
+        for($i = 0; $i < $length[1]; $i++) {
+            for($j = 0; $j < $length[2]; $j++) {
+                for($k = 0; $k < $length[3]; $k++) {
+                    if($nev[$i][$j][$k] == "-") {
+                        
+                    }
+                    else {
+                        if($min[$i][$j][$k] > $szam[$i][$j][$k]) {
+                            $result .= '<tr>';
+                            $result .= '<td>'. $nev[$i][$j][$k] .'</td>
+                            <td>'. $store[$x][0]. '</td>
+                            <td>'.$i+1 .'. sor</td>
+                            <td>'.$j+1 .'. oszlop</td>
+                            <td>'.$k+1 .'. polc</td>
+                            <td>'.$szam[$i][$j][$k] .' db</td>
+                            <td>'.$min[$i][$j][$k] .' db</td>
+                            ';
+                        }
+                    }
+                }
+            }
+        }
+        $result.= '</tr>';
+        return $result;
+    }
+    
+    static function showMissing($result) {
+        $a = '
+        <style>
+        #szia {
+            position: relative;
+            top: 50px;
+            left: 50px;
+        }
+        </style>
+        <table id="szia">
+        <tr>
+            <th colspan=7>Kifogyóban lévő termékek</th>
+        </tr>
+        <tr>
+          <th>Név</th>
+          <th>Raktár</th>
+          <th>Sor</th>
+          <th>Oszlop</th>
+          <th>Polc</th>
+          <th>Db</th>
+          <th>Min_db</th>
+        </tr>
+        ';
+        $a .= $result;
+        echo $a;
+    }
+
+    static function showProducts($adatok) {
+        echo "
+        <style>
+        table, th, td {
+        border:1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+        margin-top: 20px;
+        }
+        </style>
+        <table>
+        <tr>
+          <th>Név</th>
+          <th>Raktár</th>
+          <th>Sor</th>
+          <th>Oszlop</th>
+          <th>Polc</th>
+          <th>Minimum Darabszám</th>
+          <th>Darabszám</th>
+          <th>Ár</th>
+        </tr>
+        ";
+        for ($i = 0; $i < count($adatok); $i++) { 
+            $a1 = $adatok[$i][1];
+            $a2 = $adatok[$i][5];
+            $a3 = $adatok[$i][4];
+            $a4 = $adatok[$i][3];
+            $a5 = $adatok[$i][2];
+            $a6 = $adatok[$i][6];
+            $a7 = $adatok[$i][7];
+            $a8 = $adatok[$i][8];
+            echo "
+            <tr>
+                <td>$a1</td>
+                <td>$a2</td>
+                <td>$a3</td>
+                <td>$a4</td>
+                <td>$a5</td>
+                <td>$a6</td>
+                <td>$a7</td>
+                <td>$a8 Ft</td>
+            </tr>
+            ";
+        }
+        echo "</table>";
     }
 
 
