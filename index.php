@@ -11,13 +11,13 @@
     <a href="muveletek.php"><button>Műveletek</button></a>
     <h1>Labdák</h1>
     <?php
+    require_once "eszkozok.php";
+    Eszkozok::showCreateDatabaseButton();
     $servername = "localhost";
     $username = "root";
     $password = null;
     $database = "nyilvantartas";
     $mysqli = new mysqli($servername, $username, $password, $database);
-    require_once "eszkozok.php";
-    Eszkozok::showCreateDatabaseButton();
     $a = Eszkozok::getProductsName($mysqli);
     echo "<br>";
     echo "<h4>Válassz egy terméket: </h4>";

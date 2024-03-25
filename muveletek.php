@@ -10,6 +10,9 @@
     <a href="raktar.php"><button>Raktárak</button></a>
     <a href="index.php"><button>Főoldal</button></a>
     <h1>Műveletek</h1>
+    <br>
+    <a href="hozzaad.php"><button>Adat hozzáadása</button></a>
+    <br>
     <?php
     $servername = "localhost";
     $username = "root";
@@ -17,6 +20,10 @@
     $database = "nyilvantartas";
     $mysqli = new mysqli($servername, $username, $password, $database);
     require_once "eszkozok.php";
+    if(isset($_POST['btn-delete'])) {
+        $id = $_POST['btn-delete'];
+        Eszkozok::delete($mysqli, $id);
+    }
     $all = Eszkozok::getALL($mysqli);
     Eszkozok::showProducts($all);
     ?>

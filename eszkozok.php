@@ -200,9 +200,9 @@ class Eszkozok
                 
             }
             $result .= '</tr>';
-            for($j=1;$j < $length[2]; $j++) {
+            for($j=1;$j < $length[3]; $j++) {
                 $result .= '<tr>';
-                for($k=1;$k < $length[3]+1; $k++) {
+                for($k=1;$k < $length[2]+1; $k++) {
                     if($tomb[$i-1][$k-1][$j] == "-") {
                         $result .= '<td>-</td>';
                     }
@@ -409,6 +409,7 @@ class Eszkozok
           <th>Minimum Darabszám</th>
           <th>Darabszám</th>
           <th>Ár</th>
+          <th>Gombok</th>
         </tr>
         ";
         for ($i = 0; $i < count($adatok); $i++) { 
@@ -430,10 +431,53 @@ class Eszkozok
                 <td>$a6</td>
                 <td>$a7</td>
                 <td>$a8 Ft</td>
+                <td>",
+                    Eszkozok::showChangeButton($adatok[$i][0]);
+                    Eszkozok::showDeleteButton($adatok[$i][0]);
+                echo "</td>
+                
             </tr>
             ";
         }
         echo "</table>";
+    }
+
+    static function showChangeButton($a) {
+        echo '
+            <form method="post" action="valtoztat.php?id=' . $a . '">
+            <button id="btn-change" name="btn-change" title="change" value="'.$a.'">
+            Adat módosítása
+            </button>
+            </form>
+        ';
+    }
+
+    static function showDeleteButton($a) {
+        echo '
+        <form method="post" action="">
+            <button id="btn-delete" name="btn-delete" title="delete" value="'.$a.'">
+            Adat törlése
+            </button>
+        </form>
+        ';
+    }
+
+    static function update($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h)
+    {
+        $query = "UPDATE products SET name='$a', id_shelf='$e', id_column='$d', id_row='$c', id_store='$b', min_qty='$f', quantity='$g', price='$h' WHERE id = $id;";
+        $mysqli->query($query);
+    }
+
+    static function delete($mysqli, $id)
+    {
+        $query = "DELETE FROM products WHERE id = $id";
+        $mysqli->query($query);
+    }
+
+    static function addData($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h)
+    {
+        $query = "INSERT INTO products (id, name, id_shelf, id_column, id_row, id_store, min_qty, quantity, price) VALUES ('$id', '$a', '$e', '$d', '$c', '$b', '$f', '$g', '$h')";
+        $mysqli->query($query);
     }
 
 
