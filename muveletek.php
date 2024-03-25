@@ -12,6 +12,7 @@
     <h1>Műveletek</h1>
     <br>
     <a href="hozzaad.php"><button>Adat hozzáadása</button></a>
+    <a href="raktarmuveletek.php"><button>Raktár műveletek</button></a>
     <br>
     <?php
     $servername = "localhost";

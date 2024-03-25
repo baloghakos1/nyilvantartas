@@ -2,6 +2,13 @@
 
 class Eszkozok 
 {
+
+    static  function dbExists($mysqli,$db) {
+        $sql = "SHOW DATABASES LIKE 'nyilvantartas';";
+
+        return $mysqli->query($sql)->fetch_all();
+    }
+
     static function showCreateDatabaseButton()
     {
         echo '
@@ -480,5 +487,165 @@ class Eszkozok
         $mysqli->query($query);
     }
 
+    static function addRaktar($mysqli, $id ,$name, $address) {
+        $query = "INSERT INTO stores (id, name, address) VALUES ('$id','$name', '$address')";
+        $mysqli->query($query);
+    }
+
+    static function showStores($adatok) {
+        echo "
+        <style>
+        table, th, td {
+        border:1px solid black;
+        border-collapse: collapse;
+        padding: 10px;
+        margin-top: 20px;
+        }
+        </style>
+        <table>
+        <tr>
+          <th>Név</th>
+          <th>Cím</th>
+          <th>Gombok</th>
+        </tr>
+        ";
+        for ($i = 0; $i < count($adatok); $i++) { 
+            $a1 = $adatok[$i][1];
+            $a2 = $adatok[$i][2];
+            echo "
+            <tr>
+                <td>$a1</td>
+                <td>$a2</td>
+                <td>",
+                    Eszkozok::showChangeButton2($adatok[$i][0]),
+                    Eszkozok::showDeleteButton($adatok[$i][0]);
+                echo "</td>
+                
+            </tr>
+            ";
+        }
+    }
+
+    static function getAllStores($mysqli) {
+        $a = "SELECT * FROM stores";
+        return $mysqli->query($a)->fetch_all();
+    }
+
+    static function delete2($mysqli, $id)
+    {
+        $query = "DELETE FROM stores WHERE id = $id";
+        $mysqli->query($query);
+    }
+
+    static function showChangeButton2($a) {
+        echo '
+            <form method="post" action="valtoztat2.php?id=' . $a . '">
+            <button id="btn-change" name="btn-change" title="change" value="'.$a.'">
+            Adat módosítása
+            </button>
+            </form>
+        ';
+    }
+
+    static function updateStores($mysqli, $id, $a, $b) {
+        $query = "UPDATE stores SET name='$a', address='$b' WHERE id = $id;";
+        $mysqli->query($query);
+    }
+
+    static function showAddButton2() {
+        echo '
+            <a href="hozzaad2.php"><button>Adat hozzáadása</button></a>
+        ';
+    }
+
+    static function addRowButton() {
+        echo '
+        <form method="post" action="">
+            <button id="addRow" name="addRow" title="addRow">
+            Új sor hozzáadása
+            </button>
+        </form>
+        ';
+    }
+
+    static function addRow($mysqli, $len) {
+        $query = "INSERT INTO row (id, name) VALUES ('". $len+1 ."', '". $len+1 .". sor')";
+        $mysqli->query($query);
+    }
+
+    static function deleteRowButton() {
+        echo '
+        <form method="post" action="">
+            <button id="deleteRow" name="deleteRow" title="deleteRow">
+            Sor törlése
+            </button>
+        </form>
+        ';
+    }
+
+    static function deleteRow($mysqli, $len) {
+        $query = "DELETE FROM row WHERE id = $len";
+        $mysqli->query($query);
+    }
+
+    static function addColumnButton() {
+        echo '
+        <form method="post" action="">
+            <button id="addColumn" name="addColumn" title="addColumn">
+            Új oszlop hozzáadása
+            </button>
+        </form>
+        ';
+    }
+
+    static function addColumn($mysqli, $len) {
+        $query = "INSERT INTO column_ (id, name) VALUES ('". $len+1 ."', '". $len+1 .". oszlop')";
+        $mysqli->query($query);
+    }
+
+    static function deleteColumnButton() {
+        echo '
+        <form method="post" action="">
+            <button id="deleteColumn" name="deleteColumn" title="deleteColumn">
+            Oszlop törlése
+            </button>
+        </form>
+        ';
+    }
+
+    static function deleteColumn($mysqli, $len) {
+        $query = "DELETE FROM column_ WHERE id = $len";
+        $mysqli->query($query);
+    }
+
+    static function addShelfButton() {
+        echo '
+        <form method="post" action="">
+            <button id="addShelf" name="addShelf" title="addShelf">
+            Új polc hozzáadása
+            </button>
+        </form>
+        ';
+    }
+
+    static function addShelf($mysqli, $len) {
+        $query = "INSERT INTO shelves (id, name) VALUES ('". $len+1 ."', '". $len+1 .". polc')";
+        $mysqli->query($query);
+    }
+
+    static function deleteShelfButton() {
+        echo '
+        <form method="post" action="">
+            <button id="deleteShelf" name="deleteShelf" title="deleteShelf">
+            Polc törlése
+            </button>
+        </form>
+        ';
+    }
+
+    static function deleteShelf($mysqli, $len) {
+        $query = "DELETE FROM shelves WHERE id = $len";
+        $mysqli->query($query);
+    }
 
 }
