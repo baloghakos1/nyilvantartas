@@ -648,4 +648,19 @@ class Eszkozok
         $mysqli->query($query);
     }
 
+    static function checkIfExist($all, $allLen, $b, $c, $d, $e) {
+        for($i = 0; $i < $allLen[0][0]; $i++) {
+            if ($all[$i][2] == $e) {
+                if ($all[$i][3] == $d) {
+                    if ($all[$i][4] == $c) {
+                        if ($all[$i][5] == $b) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
 }

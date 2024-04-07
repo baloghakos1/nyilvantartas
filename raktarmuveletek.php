@@ -53,6 +53,8 @@
     Eszkozok::addShelfButton();
     Eszkozok::deleteShelfButton();
     echo "<br><br><br><br>";
+    echo "Raktár hozzáadása";
+    echo "<br><br>";
     Eszkozok::showAddButton2();
     ?>
 </body>

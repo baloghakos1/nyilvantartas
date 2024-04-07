@@ -28,7 +28,7 @@ for($i = 0; $i < $x[0]; $i++) {
 <input type="text" id="input1" name="input1" value="'.$asd[$i][1].'"><br>
 <label for="input2">Cím:</label><br>
 <input type="text" id="input2" name="input2" value="'.$asd[$i][2].'"><br>
-<input type="submit" value="Submit">
+<input type="submit" value="Mehet">
 </form>';
     }
 }

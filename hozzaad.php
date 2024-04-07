@@ -35,7 +35,7 @@ echo '<form method="post">
 <input type="number" id="input7" name="input7"><br>
 <label for="input8">Ár:</label><br>
 <input type="number" id="input8" name="input8"><br>
-<input type="submit" value="Submit">
+<input type="submit" value="Mehet">
 </form>';
 if(isset($_POST['input1'])) {
     $a = $_POST['input1'];
@@ -48,9 +48,19 @@ if(isset($_POST['input1'])) {
     $h = $_POST['input8'];
 }
 if(isset($a)) {
-    $x = Eszkozok::getProductLength($mysqli);
-    $id = $x[0][0]+1;
-    Eszkozok::addData($mysqli,$id,$a,$b,$c,$d,$e,$f,$g,$h);
+    $adat = Eszkozok::getALL($mysqli);
+    $szam = Eszkozok::getProductLength($mysqli);
+    $letezik = Eszkozok::checkIfExist($adat,$szam,$b,$c,$d,$e);
+}
+if(isset($a)) {
+    if($letezik) {
+        $x = Eszkozok::getProductLength($mysqli);
+        $id = $x[0][0]+1;
+        Eszkozok::addData($mysqli,$id,$a,$b,$c,$d,$e,$f,$g,$h);
+    }
+    else {
+        echo "Ezen a helyen már létezik termék";
+    }
 }
 ?>
 

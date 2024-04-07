@@ -25,7 +25,7 @@ echo '<form method="post">
 <input type="text" id="input1" name="input1"><br>
 <label for="input2">Cím:</label><br>
 <input type="text" id="input2" name="input2"><br>
-<input type="submit" value="Submit">
+<input type="submit" value="Mehet">
 </form>';
 if(isset($_POST['input1'])) {
     $a = $_POST['input1'];

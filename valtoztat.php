@@ -41,7 +41,7 @@ for($i = 0; $i < $oksa[0]; $i++) {
 <input type="number" id="input7" name="input7" value="'.$asd[$i][7].'"><br>
 <label for="input8">Ár:</label><br>
 <input type="number" id="input8" name="input8" value="'.$asd[$i][8].'"><br>
-<input type="submit" value="Submit">
+<input type="submit" value="Mehet">
 </form>';
 break;
     }
@@ -57,7 +57,17 @@ if(isset($_POST['input1'])) {
     $h = $_POST['input8'];
 }
 if(isset($a)) {
-    Eszkozok::update($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h);
+    $adat = Eszkozok::getALL($mysqli);
+    $szam = Eszkozok::getProductLength($mysqli);
+    $letezik = Eszkozok::checkIfExist($adat,$szam,$b,$c,$d,$e);
+}
+if(isset($a)) {
+    if($letezik) {
+        Eszkozok::update($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h);
+    }
+    else {
+        echo "Ezen a helyen már létezik termék";
+    }
 }
 ?>
 
