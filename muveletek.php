@@ -11,6 +11,11 @@
     <a href="index.php"><button>Főoldal</button></a>
     <h1>Műveletek</h1>
     <br>
+    <form action="" method="post">
+        <input type="text" id="inputField" name="inputField"><br>
+        <button type="submit" name="submitButton">Keresés</button>
+    </form>
+    <br><br>
     <a href="hozzaad.php"><button>Adat hozzáadása</button></a>
     <a href="raktarmuveletek.php"><button>Raktár műveletek</button></a>
     <br>
@@ -26,7 +31,14 @@
         Eszkozok::delete($mysqli, $id);
     }
     $all = Eszkozok::getALL($mysqli);
-    Eszkozok::showProducts($all);
+    if (isset($_POST['submitButton'])) {
+        $inputValue = $_POST['inputField'];
+        $search = Eszkozok::Search($mysqli, $inputValue);
+        Eszkozok::showProducts($search);
+    }
+    else {
+        Eszkozok::showProducts($all);
+    }
     ?>
 </body>
 </html>

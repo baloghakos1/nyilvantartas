@@ -28,13 +28,13 @@ for($i = 0; $i < $oksa[0]; $i++) {
 <label for="input1">Név:</label><br>
 <input type="text" id="input1" name="input1" value="'.$asd[$i][1].'"><br>
 <label for="input2">Raktár:</label><br>
-<input type="number" min="1" max="'.$x[0].'" id="input2" name="input2" value="'.$asd[$i][2].'"><br>
+<input type="number" min="1" max="'.$x[0].'" id="input2" name="input2" value="'.$asd[$i][5].'"><br>
 <label for="input3">Sor:</label><br>
-<input type="number" min="1" max="'.$x[1].'" id="input3" name="input3" value="'.$asd[$i][3].'"><br>
+<input type="number" min="1" max="'.$x[1].'" id="input3" name="input3" value="'.$asd[$i][4].'"><br>
 <label for="input4">Oszlop:</label><br>
-<input type="number" min="1" max="'.$x[2].'" id="input4" name="input4" value="'.$asd[$i][4].'"><br>
+<input type="number" min="1" max="'.$x[2].'" id="input4" name="input4" value="'.$asd[$i][3].'"><br>
 <label for="input5">Polc:</label><br>
-<input type="number" min="1" max="'.$x[3].'" id="input5" name="input5" value="'.$asd[$i][5].'"><br>
+<input type="number" min="1" max="'.$x[3].'" id="input5" name="input5" value="'.$asd[$i][2].'"><br>
 <label for="input6">Minimum Darabszám:</label><br>
 <input type="number" id="input6" name="input6" value="'.$asd[$i][6].'"><br>
 <label for="input7">Darabszám:</label><br>
@@ -57,13 +57,16 @@ if(isset($_POST['input1'])) {
     $h = $_POST['input8'];
 }
 if(isset($a)) {
+    Eszkozok::delete($mysqli, $id);
     $adat = Eszkozok::getALL($mysqli);
     $szam = Eszkozok::getProductLength($mysqli);
     $letezik = Eszkozok::checkIfExist($adat,$szam,$b,$c,$d,$e);
+    Eszkozok::addData($mysqli, $id,$asd[$i][1],$asd[$i][5],$asd[$i][4],$asd[$i][3],$asd[$i][2],$asd[$i][2],$asd[$i][2],$asd[$i][2]);
 }
 if(isset($a)) {
     if($letezik) {
-        Eszkozok::update($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h);
+        Eszkozok::delete($mysqli, $id);
+        Eszkozok::addData($mysqli, $id,$a,$b,$c,$d,$e,$f,$g,$h);
     }
     else {
         echo "Ezen a helyen már létezik termék";

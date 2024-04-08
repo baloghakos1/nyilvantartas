@@ -375,7 +375,6 @@ class Eszkozok
         #szia {
             position: relative;
             top: 50px;
-            left: 50px;
         }
         </style>
         <table id="szia">
@@ -661,6 +660,23 @@ class Eszkozok
             }
         }
         return true;
+    }
+
+    static function Search($mysqli, string $name)
+    {
+        $query = "SELECT * FROM products WHERE name LIKE '%$name%'";
+
+        return $mysqli->query($query)->fetch_all();
+    }
+
+    static function showPdfButton() {
+        echo '
+        <form method="post" action="pdf/pdf.php">
+            <button id="pdf" name="pdf" title="pdf">
+            Kiírás pdf-be
+            </button>
+        </form>
+        ';
     }
 
 }
