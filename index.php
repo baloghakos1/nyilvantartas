@@ -28,7 +28,7 @@
         $database = "nyilvantartas";
         $mysqli = new mysqli($servername, $username, $password, $database);
         $a = Eszkozok::getProductsName($mysqli);
-        
+        Eszkozok::showPdfButton();
         echo "<br>";
         echo "<h4>Válassz egy terméket: </h4>";
         Eszkozok::showProductsDropdown($a);
