@@ -11,6 +11,7 @@
     <a href="muveletek.php"><button>Műveletek</button></a>
     <h1>Labdák</h1>
     <?php
+    require 'vendor/autoload.php';
     require_once "eszkozok.php";
     $servername = "localhost";
     $username = "root";

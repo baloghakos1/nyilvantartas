@@ -21,8 +21,8 @@ class Eszkozok
     static function showBackButton()
     {
         echo '
-            <form method="post" action="index.php">
-                <button id="btn-export" name="btn-export" title="Export to .CSV">
+            <form method="post" action="http://localhost:8000/nyilvantartas/index.php">
+                <button id="btn-export" name="btn-export" title="">
                     Vissza
                 </button>
             </form>';
